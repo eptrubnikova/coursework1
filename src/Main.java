@@ -3,26 +3,28 @@ public class Main {
 
     private static Employee[] employees = new Employee[10];
 
-    public static void listEmployees() {
+    public static void printListEmployees() {
         for (Employee employee : Main.employees) {
             System.out.println(employee);
         }
     }
 
-    public static double sumWage() {
+    public static double findSumWage() {
         double sum = 0;
         for (Employee employee : Main.employees) {
-            sum = sum + employee.getWage();
+            if (employee != null) {
+                sum = sum + employee.getWage();
+            }
         }
         System.out.println("Сумма затрат на выплату заработной платы сотрудникам = " + sum);
         return sum;
     }
 
     public static void findMinWage() {
-        String salaryEmployee = employees[0].getFullName();
+        String salaryEmployee = null;
         double minWage = employees[0].getWage();
         for (Employee employee : Main.employees) {
-            if (employee.getWage() < minWage) {
+            if (employee != null && employee.getWage() < minWage) {
                 minWage = employee.getWage();
                 salaryEmployee = employee.getFullName();
             }
@@ -31,10 +33,10 @@ public class Main {
     }
 
     public static void findMaxWage() {
-        String salaryEmployee = employees[0].getFullName();
+        String salaryEmployee = null;
         double maxWage = employees[0].getWage();
         for (Employee employee : Main.employees) {
-            if (employee.getWage() > maxWage) {
+            if (employee != null && employee.getWage() > maxWage) {
                 maxWage = employee.getWage();
                 salaryEmployee = employee.getFullName();
             }
@@ -42,24 +44,124 @@ public class Main {
         System.out.println("Максимальная заработная плата у сотрудника " + salaryEmployee + " = " + maxWage);
     }
 
-    public static double averageSalary() {
-        double sum = 0;
+    public static void findAverageSalary() {
+        double sum = findSumWage();
         double averageSalary = 0;
+        int amountEmployees = employees.length;
         for (Employee employee : Main.employees) {
-            sum = sum + employee.getWage();
+            if (employee == null) {
+                amountEmployees = employees.length - 1;
+            }
+            averageSalary = sum / amountEmployees;
         }
-        averageSalary = sum/employees.length;
         System.out.println("Среднее значение заработных плат = " + averageSalary);
-        return averageSalary;
     }
 
-    public static void listFullName() {
+
+    public static void printListFullName() {
         for (Employee employee : Main.employees) {
-            System.out.println(employee.getId() + ". " + employee.getFullName());
+            if (employee != null) {
+                System.out.println(employee.getId() + ". " + employee.getFullName());
+            }
         }
     }
+
     public static void indent() {
         System.out.println("***");
+    }
+
+    public static void indexWage(double x) {
+        double indexingWage;
+        for (Employee employee : Main.employees) {
+            if (employee != null) {
+                indexingWage = employee.getWage() + employee.getWage() * x;
+                System.out.println("Новая заработная плата сотрудника " + employee.getFullName() + " = " + indexingWage);
+            }
+        }
+    }
+
+    public static void findMinWageDepartment(int y) {
+        double minWageDepartment = employees[0].getWage();
+        for (Employee employee : Main.employees) {
+            if (employee != null && employee.getNumberDepartament() == y && employee.getWage() < minWageDepartment) {
+                minWageDepartment = employee.getWage();
+                System.out.println("В отделе № " + y + " минимальная зарплата у сотрудника " + employee.getFullName() +
+                        " = " + minWageDepartment);
+            }
+        }
+    }
+
+    public static void fimdMaxWageDepartment(int y) {
+        double maxgeDepartment = employees[0].getWage();
+        for (Employee employee : Main.employees) {
+            if (employee != null && employee.getNumberDepartament() == y && employee.getWage() > maxgeDepartment) {
+                maxgeDepartment = employee.getWage();
+                System.out.println("В отделе № " + y + " максимальная зарплата у сотрудника " + employee.getFullName() +
+                        " = " + maxgeDepartment);
+            }
+        }
+    }
+
+    public static void findSumWageDepartament(int y) {
+        double sum = 0;
+        for (Employee employee : Main.employees) {
+            if (employee != null && employee.getNumberDepartament() == y) {
+                sum = sum + employee.getWage();
+            }
+        }
+        System.out.println("В отделе № " + y + " cумма затрат на выплату заработной платы сотрудникам = " + sum);
+    }
+
+    public static void findAverageSalaryDepartament(int y) {
+        double sum = 0;
+        double averageSalary = 0;
+        int amountEmployees = 0;
+        for (Employee employee : Main.employees) {
+            if (employee != null && employee.getNumberDepartament() == y) {
+                sum += employee.getWage();
+                amountEmployees++;
+            }
+            averageSalary = sum / amountEmployees;
+        }
+        System.out.println("В отделе №" + y + " среднее значение заработных плат = " + averageSalary);
+    }
+
+    public static void indexWageDeparttament(double x, int y) {
+        double indexWage = employees[0].getWage();
+        System.out.println("В отделе №" + y + " после индексации заработная плата у сотрудников составляет: ");
+        for (Employee employee : Main.employees) {
+            if (employee != null && employee.getNumberDepartament() == y) {
+                indexWage += indexWage * x;
+                System.out.println(employee.getFullName() + " = " + indexWage);
+            }
+        }
+    }
+
+    public static void printListEmployeesDepartament(int y) {
+        System.out.println("Список сотрудников отдела №" + y + ":");
+        for (Employee employee : Main.employees) {
+            if (employee != null && employee.getNumberDepartament() == y) {
+                System.out.println(employee.getFullName() + ", " + employee.getWage());
+            }
+        }
+    }
+
+    public static void findWageLessData (double i) {
+        for (Employee employee : Main.employees) {
+            if (employee != null && employee.getWage() < i) {
+                System.out.println("Заработная плата у сотрудника " + employee.getFullName() +
+                        " (" + employee.getWage() + ") меньше " + i + " рублей");
+            }
+        }
+    }
+
+    public static void findWageMoreData (double i) {
+        for (Employee employee : Main.employees) {
+            if (employee != null && employee.getWage() > i) {
+                System.out.println("Заработная плата у сотрудника " + employee.getFullName() +
+                        " (" + employee.getWage() + ") больше " + i + " рублей");
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -67,25 +169,46 @@ public class Main {
                 employees[0] = new Employee("Иванов Иван Иванович", 50000, 1),
                 employees[1] = new Employee("Сидоров Сидор Сидорович", 30000, 1),
                 employees[2] = new Employee("Семенов Семен Семенович", 40000, 1),
-                employees[3] = new Employee("Федоров Федор Федорович", 50000.50, 2),
+                null,
                 employees[4] = new Employee("Сергеев Сергей Сергеевич", 12250.20, 2),
                 employees[5] = new Employee("Владимиров Владимир Владимирович", 60000, 3),
                 employees[6] = new Employee("Петров Петр Петрович", 25000, 3),
-                employees[7] = new Employee("Васильев Василий Васильевич", 35000, 3),
+                null,
                 employees[8] = new Employee("Егоров Егор Егорович", 75000, 4),
                 employees[9] = new Employee("Анатольев Анатолий Анатольевич", 45150.70, 4),
         };
-        listEmployees();
+        printListEmployees();
         indent();
-        sumWage();
+        findSumWage();
         indent();
         findMinWage();
         indent();
         findMaxWage();
         indent();
-        averageSalary();
+        findAverageSalary();
         indent();
-        listFullName();
+        printListFullName();
+        indent();
+        double x = 0.5;
+        indexWage(x);
+        indent();
+        int y = 3;
+        findMinWageDepartment(y);
+        indent();
+        fimdMaxWageDepartment(y);
+        indent();
+        findSumWageDepartament(y);
+        indent();
+        findAverageSalaryDepartament(y);
+        indent();
+        indexWageDeparttament(x, y);
+        indent();
+        printListEmployeesDepartament(y);
+        indent();
+        double i = 50_000.0;
+        findWageLessData(i);
+        indent();
+        findWageMoreData (i);
     }
 }
 
