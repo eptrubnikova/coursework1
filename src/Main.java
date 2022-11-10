@@ -16,7 +16,6 @@ public class Main {
                 sum = sum + employee.getWage();
             }
         }
-        System.out.println("Сумма затрат на выплату заработной платы сотрудникам = " + sum);
         return sum;
     }
 
@@ -46,17 +45,16 @@ public class Main {
 
     public static void findAverageSalary() {
         double sum = findSumWage();
-        double averageSalary = 0;
+        double averageSalary;
         int amountEmployees = employees.length;
         for (Employee employee : Main.employees) {
             if (employee == null) {
-                amountEmployees = employees.length - 1;
+                amountEmployees--;
             }
-            averageSalary = sum / amountEmployees;
         }
+        averageSalary = sum / amountEmployees;
         System.out.println("Среднее значение заработных плат = " + averageSalary);
     }
-
 
     public static void printListFullName() {
         for (Employee employee : Main.employees) {
@@ -71,11 +69,10 @@ public class Main {
     }
 
     public static void indexWage(double x) {
-        double indexingWage;
         for (Employee employee : Main.employees) {
             if (employee != null) {
-                indexingWage = employee.getWage() + employee.getWage() * x;
-                System.out.println("Новая заработная плата сотрудника " + employee.getFullName() + " = " + indexingWage);
+                employee.setWage(employee.getWage() + employee.getWage() * x);
+                System.out.println("Новая заработная плата сотрудника " + employee.getFullName() + " = " + employee.getWage());
             }
         }
     }
@@ -127,12 +124,11 @@ public class Main {
     }
 
     public static void indexWageDeparttament(double x, int y) {
-        double indexWage = employees[0].getWage();
         System.out.println("В отделе №" + y + " после индексации заработная плата у сотрудников составляет: ");
         for (Employee employee : Main.employees) {
             if (employee != null && employee.getNumberDepartament() == y) {
-                indexWage += indexWage * x;
-                System.out.println(employee.getFullName() + " = " + indexWage);
+                employee.setWage(employee.getWage() + employee.getWage() * x);
+                System.out.println(employee.getFullName() + " = " + employee.getWage());
             }
         }
     }
@@ -146,7 +142,7 @@ public class Main {
         }
     }
 
-    public static void findWageLessData (double i) {
+    public static void findWageLessData(double i) {
         for (Employee employee : Main.employees) {
             if (employee != null && employee.getWage() < i) {
                 System.out.println("Заработная плата у сотрудника " + employee.getFullName() +
@@ -155,7 +151,7 @@ public class Main {
         }
     }
 
-    public static void findWageMoreData (double i) {
+    public static void findWageMoreData(double i) {
         for (Employee employee : Main.employees) {
             if (employee != null && employee.getWage() > i) {
                 System.out.println("Заработная плата у сотрудника " + employee.getFullName() +
@@ -167,7 +163,7 @@ public class Main {
     public static void main(String[] args) {
         employees = new Employee[]{
                 employees[0] = new Employee("Иванов Иван Иванович", 50000, 1),
-                employees[1] = new Employee("Сидоров Сидор Сидорович", 30000, 1),
+                null,
                 employees[2] = new Employee("Семенов Семен Семенович", 40000, 1),
                 null,
                 employees[4] = new Employee("Сергеев Сергей Сергеевич", 12250.20, 2),
@@ -179,7 +175,7 @@ public class Main {
         };
         printListEmployees();
         indent();
-        findSumWage();
+        System.out.println("Сумма затрат на выплату заработной платы сотрудникам = " + findSumWage());
         indent();
         findMinWage();
         indent();
@@ -208,7 +204,7 @@ public class Main {
         double i = 50_000.0;
         findWageLessData(i);
         indent();
-        findWageMoreData (i);
+        findWageMoreData(i);
     }
 }
 
